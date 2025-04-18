@@ -1,151 +1,210 @@
-/* Transaction History Page Styles */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f5f7fa;
-    color: #2c3e50;
-    line-height: 1.6;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .container {
-    max-width: 800px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-    position: relative; /* Needed for absolute positioning */
-  }
-  
-  h2 {
-    color: #2c3e50;
-    text-align: center;
-    margin-bottom: 1.5rem;
-    font-size: 1.8rem;
-    padding: 0 80px; /* Prevents overlap with button */
-  }
-  
-  a {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background-color: #3498db;
-    color: white !important;
-    padding: 8px 15px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: 500;
-    transition: all 0.3s;
-    border: 1px solid #2980b9;
-    display: inline-flex;
-    align-items: center;
-  }
-  a:hover {
-    background-color: #2980b9;
-    transform: translateY(-2px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  }
-  
-  a::before {
-    font-weight: bold;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f7fa;
+  color: #2c3e50;
+  line-height: 1.6;
+  padding: 0;
+  margin: 0;
+}
 
-  }
-  
-  .transaction-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+.container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  position: relative; 
+}
+
+h2 {
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  padding: 0 80px; 
+}
+
+a {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #3498db;
+  color: white !important;
+  padding: 8px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s;
+  border: 1px solid #2980b9;
+  display: inline-flex;
+  align-items: center;
+}
+a:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+a::before {
+  font-weight: bold;
+}
+
+.transaction-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.transaction-list li {
+  padding: 1rem 1.5rem;
+  margin-bottom: 0.75rem;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+  border-left: 4px solid #3498db;
+}
+
+.transaction-list li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.transaction-list li > span {
+  flex-grow: 1;
+  font-size: 1rem;
+}
+.transaction-actions {
+  display: inline-block; 
+  white-space: nowrap; 
+}
+
+
+.transaction-actions button.inline-form {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 5px; 
+  margin-bottom: 0; 
+}
+
+.transaction-actions form.inline-form {
+  display: inline-block; 
+  margin: 0; 
+}
+.transaction-actions form.inline-form button[type="submit"] {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0; 
+}
+
+.transaction-list li[data-category="food"] {
+  border-left-color: #2ecc71;
+}
+.transaction-list li[data-category="entertainment"] {
+  border-left-color: #f39c12;
+}
+.transaction-list li[data-category="medical"] {
+  border-left-color: #e74c3c;
+}
+.transaction-list li[data-category="loan"] {
+  border-left-color: #9b59b6;
+}
+.transaction-list li[data-category="other"] {
+  border-left-color: #34495e;
+}
+
+@media (max-width: 768px) {
+  .container {
+    margin: 1rem;
+    padding: 1.5rem;
   }
   
   .transaction-list li {
-    padding: 1rem 1.5rem;
-    margin-bottom: 0.75rem;
-    background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: all 0.3s ease;
-    border-left: 4px solid #3498db;
+    flex-direction: column;
+    align-items: flex-start;
   }
   
-  .transaction-list li:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  .transaction-actions {
+    margin-top: 0.5rem;
+    align-self: flex-end;
   }
-  
-  .transaction-list li > span {
-    flex-grow: 1;
-    font-size: 1rem;
-  }
-  
-  .inline-form {
-    display: inline-block;
-    margin-left: 0.5rem;
-  }
-  
-  .inline-form button {
-    padding: 6px 12px;
-    border: none;
-    border-radius: 4px;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-  
-  .inline-form button[type="submit"] {
-    background-color: #3498db;
-    color: white;
-  }
-  
-  .inline-form button[type="submit"]:hover {
-    background-color: #2980b9;
+}
 
-  }
-  
-  .inline-form:last-child button {
-    background-color: #e74c3c;
-    color: white;
-  }
-  
-  .inline-form:last-child button:hover {
-    background-color: #c0392b;
+.edit-form {
+  background-color: #f8f9fa;
+  border: 1px solid #dcdfe3;
+  padding: 1rem 1.2rem;
+  margin-top: 0.8rem;
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  max-width: 100%;
+  animation: fadeIn 0.3s ease-in-out;
+}
 
-  }
-  
-  /* Category Colors */
-  .transaction-list li[data-category="food"] {
-    border-left-color: #2ecc71;
-  }
-  .transaction-list li[data-category="entertainment"] {
-    border-left-color: #f39c12;
-  }
-  .transaction-list li[data-category="medical"] {
-    border-left-color: #e74c3c;
-  }
-  .transaction-list li[data-category="loan"] {
-    border-left-color: #9b59b6;
-  }
-  .transaction-list li[data-category="other"] {
-    border-left-color: #34495e;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .container {
-      margin: 1rem;
-      padding: 1.5rem;
-    }
-    
-    .transaction-list li {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-    
-    .transaction-actions {
-      margin-top: 0.5rem;
-      align-self: flex-end;
-    }
-  }
+.edit-form input {
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
+  background: #fff;
+  transition: border-color 0.3s ease;
+  margin-bottom: 5px;
+}
+
+.edit-form input:focus {
+  border-color: #3498db;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
+}
+
+.edit-form button {
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+  margin-top: 5px;
+  margin-right: 10px;
+}
+
+.edit-form button[type="button"]:first-of-type {
+  background-color: #27ae60;
+  color: white;
+}
+
+.edit-form button[type="button"]:first-of-type:hover {
+  background-color: #219653;
+}
+
+.edit-form button[type="button"]:last-of-type {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.edit-form button[type="button"]:last-of-type:hover {
+  background-color: #c0392b;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

@@ -4,9 +4,10 @@ const path = require('path');
 const Transaction = require('./models/Transaction');
 const transactionRoutes = require('./routes/transactionRoutes');
 const Budget = require('./models/Budget'); // Import the model
-const moment = require('moment');
+const methodOverride = require('method-override');
 
 const app = express();
+app.use(methodOverride('_method'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -26,7 +27,6 @@ app.get('/', async (req, res) => {
   res.render('index', { total, categoryBreakdown, recentTransactions, message });
 });
 
-// New route for viewing transactions using EJS
 app.get('/transactions', async (req, res) => {
     try {
       const transactions = await Transaction.find().sort({ date: -1 });
@@ -58,33 +58,24 @@ app.get('/transactions', async (req, res) => {
     }
   });
   
-  
-  // Route to fetch monthly expenses data for bar chart
-
   app.get('/chart/monthly', async (req, res) => {
     try {
       const transactions = await Transaction.find();
       const budgets = await Budget.find();
   
-      // Monthly actual expenses (total per month)
       let monthlyData = {};
-      // Monthly category-wise actual expenses
       let categoryMonthlyExpenses = {};
   
       transactions.forEach(t => {
         const month = new Date(t.date).toLocaleString('default', { month: 'short', year: 'numeric' });
   
-        // Total per month
         monthlyData[month] = (monthlyData[month] || 0) + t.amount;
   
-        // Category-wise per month
         const key = `${month}-${t.expenseType}`;
         categoryMonthlyExpenses[key] = (categoryMonthlyExpenses[key] || 0) + t.amount;
       });
   
-      // Monthly total budgets
       let monthlyBudgets = {};
-      // Monthly category-wise budgets
       let categoryMonthlyBudgets = {};
   
       budgets.forEach(b => {
@@ -96,7 +87,6 @@ app.get('/transactions', async (req, res) => {
         categoryMonthlyBudgets[key] = (categoryMonthlyBudgets[key] || 0) + b.amount;
       });
   
-      // Compute extra spend category-wise
       let extraSpending = {};
       for (let key in categoryMonthlyExpenses) {
         const actual = categoryMonthlyExpenses[key];
@@ -127,13 +117,12 @@ app.get('/transactions', async (req, res) => {
 
 
   app.post('/set-budget', async (req, res) => {
-    const selectedMonth = req.body.month; // e.g., "2025-04"
+    const selectedMonth = req.body.month; 
     const budgetData = req.body.budget;
   
-    // Remove existing budgets for this selected month
     await Budget.deleteMany({ month: selectedMonth });
   
-    // Save each budget entry
+
     const newBudgets = Object.entries(budgetData).map(([type, amount]) => ({
       month: selectedMonth,
       expenseType: type,

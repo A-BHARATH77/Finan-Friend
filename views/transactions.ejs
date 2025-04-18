@@ -3,6 +3,8 @@
 <head>
   <title>Transaction History</title>
   <link rel="stylesheet" href="/transaction.css">
+  <link rel="icon" type="image/png" href="/dp.png">
+
 </head>
 <body>
   <div class="container">
@@ -15,17 +17,68 @@
           <div class="transaction-details">
             ₹<%= t.amount %> (<%= t.expenseType %>) on <%= new Date(t.date).toLocaleDateString() %>
           </div>
+
+          <!-- Actions -->
           <div class="transaction-actions">
-            <form action="/edit/<%= t._id %>" method="GET" class="inline-form">
-              <button type="submit">Edit</button>
-            </form>
+            <button onclick="showEditForm('<%= t._id %>')" class="inline-form">Edit</button>
+
             <form action="/api/transactions/<%= t._id %>?_method=DELETE" method="POST" class="inline-form">
               <button type="submit">Delete</button>
+            </form>
+          </div>
+
+          <!-- Hidden Edit Form -->
+          <div id="edit-form-<%= t._id %>" class="edit-form" style="display: none; margin-top: 10px;">
+            <form id="form-<%= t._id %>">
+              <input type="number" name="amount" value="<%= t.amount %>" required>
+              <input type="text" name="expenseType" value="<%= t.expenseType %>" required>
+              <input type="date" name="date" value="<%= t.date.toISOString().split('T')[0] %>" required>
+              <button type="button" onclick="submitEditForm('<%= t._id %>')">Update</button>
+              <button type="button" onclick="hideEditForm('<%= t._id %>')">Cancel</button>
             </form>
           </div>
         </li>
       <% }) %>
     </ul>
   </div>
+
+  <script>
+    function showEditForm(id) {
+      document.getElementById(`edit-form-${id}`).style.display = 'block';
+    }
+
+    function hideEditForm(id) {
+      document.getElementById(`edit-form-${id}`).style.display = 'none';
+    }
+
+    async function submitEditForm(id) {
+      const form = document.getElementById(`form-${id}`);
+      const formData = new FormData(form);
+      const data = {
+        amount: formData.get('amount'),
+        expenseType: formData.get('expenseType'),
+        date: formData.get('date')
+      };
+
+      try {
+        const response = await fetch(`/api/transactions/${id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+          location.reload();
+        } else {
+          alert('Update failed');
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Error updating transaction');
+      }
+    }
+  </script>
 </body>
 </html>

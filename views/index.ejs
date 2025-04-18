@@ -9,7 +9,6 @@
   </head>
   <body>
     <div class="main-container">
-      <!-- Sidebar -->
       <div class="sidebar">
         <button onclick="toggleDashboard()">Dashboard</button>
         <a href="/chart/category"><button> Category Pie Chart</button></a>
@@ -18,10 +17,7 @@
         <a href="/set-budget"><button>Set Monthly Budget</button></a>
       </div>
 
-      <!-- Center Content -->
-      <div class="center-content">
-        
-        <!-- Dashboard Section -->
+      <div class="center-content">        
         <div id="dashboard" class="section hidden">
           <h3>Dashboard</h3>
           <p><strong>Total Expenses:</strong> ₹<%= total %></p>
@@ -41,7 +37,6 @@
           </ul>
         </div>
 
-        <!-- Input Form Section -->
         <div id="entryForm" class="section">
           <% if (message) { %>
             <div class="alert"><%= message %></div>

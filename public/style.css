@@ -1,4 +1,3 @@
-/* Base Styles & Variables */
 :root {
   --primary: #4361ee;
   --primary-dark: #3a0ca3;
@@ -34,7 +33,6 @@ body {
   transition: var(--transition);
 }
 
-/* Sidebar Styles */
 .sidebar {
   background-color: var(--sidebar-bg);
   color: white;
@@ -82,7 +80,6 @@ body {
   opacity: 1;
 }
 
-/* Center Content */
 .center-content {
   flex: 1;
   padding: 2rem;
@@ -90,7 +87,6 @@ body {
   background-color: var(--light);
 }
 
-/* Section Styling */
 .section {
   background: var(--card-bg);
   border-radius: 12px;
@@ -125,7 +121,6 @@ body {
   font-size: 1.2rem;
 }
 
-/* Dashboard Styles */
 #dashboard p strong {
   color: var(--primary-dark);
   font-size: 1.1rem;
@@ -150,7 +145,6 @@ body {
   transform: translateX(5px);
 }
 
-/* Form Styles */
 form {
   display: grid;
   gap: 1.5rem;
@@ -196,7 +190,6 @@ button[type="submit"]:hover {
   transform: translateY(-2px);
 }
 
-/* Alert Styles */
 .alert {
   background-color: var(--danger);
   color: white;
@@ -210,10 +203,9 @@ button[type="submit"]:hover {
 }
 
 .alert::before {
-  content: "⚠️";
+  content: "✅";
 }
 
-/* Animations */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
@@ -224,7 +216,6 @@ button[type="submit"]:hover {
   to { opacity: 1; transform: translateX(0); }
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .main-container {
     flex-direction: column;
@@ -249,12 +240,9 @@ button[type="submit"]:hover {
   }
 }
 
-/* Utility Classes */
 .hidden {
   display: none !important;
 }
-
-/* Color coding for categories */
 .food { color: #2ec4b6; }
 .entertainment { color: #ff9f1c; }
 .medical { color: #e71d36; }
