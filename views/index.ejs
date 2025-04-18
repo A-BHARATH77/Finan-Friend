@@ -1,0 +1,83 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Finan Friend</title>
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="icon" type="image/png" href="/dp.png">
+  </head>
+  <body>
+    <div class="main-container">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <button onclick="toggleDashboard()">Dashboard</button>
+        <a href="/chart/category"><button>View Category Chart</button></a>
+        <a href="/chart/monthly"><button>View Monthly Chart</button></a>
+        <a href="/transactions"><button>Transaction History</button></a>
+        <a href="/set-budget"><button>Set Monthly Budget</button></a>
+      </div>
+
+      <!-- Center Content -->
+      <div class="center-content">
+        
+        <!-- Dashboard Section -->
+        <div id="dashboard" class="section hidden">
+          <h3>Dashboard</h3>
+          <p><strong>Total Expenses:</strong> ₹<%= total %></p>
+
+          <h4>Category Breakdown</h4>
+          <ul>
+            <% for (let cat in categoryBreakdown) { %>
+              <li><%= cat %>: ₹<%= categoryBreakdown[cat] %></li>
+            <% } %>
+          </ul>
+
+          <h4>Recent Transactions</h4>
+          <ul>
+            <% recentTransactions.forEach(t => { %>
+              <li>₹<%= t.amount %> (<%= t.expenseType %>)</li>
+            <% }) %>
+          </ul>
+        </div>
+
+        <!-- Input Form Section -->
+        <div id="entryForm" class="section">
+          <% if (message) { %>
+            <div class="alert"><%= message %></div>
+          <% } %>
+          <form action="/api/transactions" method="POST">
+            <input type="number" name="amount" placeholder="Amount" required />
+            <input type="text" name="description" placeholder="Description" />
+            <input type="date" name="date" required />
+            <select name="expenseType" required>
+              <option value="">Select Type</option>
+              <option value="food">Food</option>
+              <option value="entertainment">Entertainment</option>
+              <option value="medical">Medical</option>
+              <option value="loan">Loan</option>
+              <option value="other">Other</option>
+            </select>
+            <button type="submit">Add Transaction</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+
+    <script>
+      function toggleDashboard() {
+        const dashboard = document.getElementById('dashboard');
+        const entryForm = document.getElementById('entryForm');
+        
+        if (dashboard.classList.contains('hidden')) {
+          dashboard.classList.remove('hidden');
+          entryForm.classList.add('hidden');
+        } else {
+          dashboard.classList.add('hidden');
+          entryForm.classList.remove('hidden');
+        }
+      }
+    </script>
+  </body>
+  </html>

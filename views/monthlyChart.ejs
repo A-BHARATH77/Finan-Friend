@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Monthly Expense vs Budget</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="/monthlyChart.css">
+</head>
+<body>
+  <div class="chart-container">
+    <h2>Monthly Expense vs Budget</h2>
+    <a href="/">← Back to Home</a>
+    <canvas id="barChart" width="600" height="400"></canvas>
+  </div>
+
+  <script>
+    const monthlyData = <%- JSON.stringify(monthlyData || {}).replace(/</g, '\\u003c') %>;
+    const monthlyBudgets = <%- JSON.stringify(monthlyBudgets || {}).replace(/</g, '\\u003c') %>;
+
+    const months = Array.from(new Set([
+      ...Object.keys(monthlyData),
+      ...Object.keys(monthlyBudgets)
+    ])).sort((a, b) => new Date(`1 ${a}`) - new Date(`1 ${b}`));
+
+    const expenseValues = months.map(month => monthlyData[month] || 0);
+    const budgetValues = months.map(month => monthlyBudgets[month] || 0);
+
+    const ctx = document.getElementById('barChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: months,
+        datasets: [
+          {
+            label: 'Actual Expense',
+            data: expenseValues,
+            backgroundColor: '#FF6384'
+          },
+          {
+            label: 'Monthly Budget',
+            data: budgetValues,
+            backgroundColor: '#36A2EB'
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
+
+  <div>
+    <h2>Extra Spending (Category-wise)</h2>
+
+    <% 
+      const grouped = {};
+      for (let key in extraSpending) {
+        const [month, category] = key.split('-');
+        if (!grouped[month]) grouped[month] = {};
+        grouped[month][category] = extraSpending[key];
+      }
+    %>
+
+    <% Object.keys(grouped).forEach(month => { %>
+      <h3><%= month %></h3>
+      <ul>
+        <% Object.keys(grouped[month]).forEach(category => { 
+             const key = `${month}-${category}`;
+             const actual = (categoryMonthlyExpenses && categoryMonthlyExpenses[key]) || 0;
+             const budget = (categoryMonthlyBudgets && categoryMonthlyBudgets[key]) || 0;
+             const extra = grouped[month][category];
+        %>
+          <li>
+            <strong><%= category %></strong>: ₹<%= actual %><br>
+            <strong>Monthly Budget:</strong> ₹<%= budget %><br>
+            <span style="color: red;">Extra amount spent: ₹<%= extra %></span>
+          </li>
+        <% }) %>
+      </ul>
+    <% }) %>
+  </div>
+</body>
+</html>

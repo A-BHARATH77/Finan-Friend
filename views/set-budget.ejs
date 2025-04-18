@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Set Monthly Budget</title>
+  <link rel="stylesheet" href="/set-budget.css" />
+</head>
+<body>
+  <div class="container">
+    <h2>Set Monthly Budget</h2>
+    <a href="/" class="top-right-inside">← Back to Home</a>
+
+        <form action="/set-budget" method="POST">
+
+            <label for="month">Select Month:</label>
+            <input type="month" name="month" required>
+          
+            <label>Food Budget:</label>
+            <input type="number" name="budget[food]" required>
+          
+            <label>Entertainment Budget:</label>
+            <input type="number" name="budget[entertainment]" required>
+          
+            <label>Medical Budget:</label>
+            <input type="number" name="budget[medical]" required>
+          
+            <label>Loan Budget:</label>
+            <input type="number" name="budget[loan]" required>
+          
+            <label>Other Budget:</label>
+            <input type="number" name="budget[other]" required>
+          
+            <button type="submit">Set Budget</button>
+          </form>
+        </div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Category-wise Monthly Charts</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="/categoryChart.css">
+</head>
+<body>
+  <div class="chart-container">
+    <h2>Monthly Category-wise Pie Charts</h2>
+    <a href="/">← Back to Home</a>
+
+    <% Object.keys(monthlyCategoryData).forEach((month, index) => { %>
+      <div style="margin-top: 40px;">
+        <h3><%= month %></h3>
+        <canvas id="chart-<%= index %>" width="400" height="400"></canvas>
+      </div>
+    <% }) %>
+  </div>
+
+  <script>
+    const monthlyData = <%- JSON.stringify(monthlyCategoryData).replace(/</g, '\\u003c') %>;
+
+    Object.keys(monthlyData).forEach((month, index) => {
+      const ctx = document.getElementById(`chart-${index}`).getContext('2d');
+      const categories = Object.keys(monthlyData[month]);
+      const amounts = categories.map(cat => monthlyData[month][cat]);
+
+      new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: categories,
+          datasets: [{
+            label: `Expenses for ${month}`,
+            data: amounts,
+            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4CAF50', '#FF9800'],
+          }]
+        },
+        options: {
+          responsive: true
+        }
+      });
+    });
+  </script>
+</body>
+</html>

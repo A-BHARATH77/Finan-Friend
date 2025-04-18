@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Transaction History</title>
+  <link rel="stylesheet" href="/transaction.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Transaction History</h2>
+    <a href="/">← Back to Home</a>
+    
+    <ul class="transaction-list">
+      <% transactions.forEach(t => { %>
+        <li data-category="<%= t.expenseType %>">
+          <div class="transaction-details">
+            ₹<%= t.amount %> (<%= t.expenseType %>) on <%= new Date(t.date).toLocaleDateString() %>
+          </div>
+          <div class="transaction-actions">
+            <form action="/edit/<%= t._id %>" method="GET" class="inline-form">
+              <button type="submit">Edit</button>
+            </form>
+            <form action="/api/transactions/<%= t._id %>?_method=DELETE" method="POST" class="inline-form">
+              <button type="submit">Delete</button>
+            </form>
+          </div>
+        </li>
+      <% }) %>
+    </ul>
+  </div>
+</body>
+</html>
