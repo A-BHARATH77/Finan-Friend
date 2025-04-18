@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 
-mongoose.connect('mongodb://localhost:27017/transactionTracker');
+mongoose.connect('mongodb://bharath:Bharath123@ac-a2usymo-shard-00-00.nxjqtrx.mongodb.net:27017,ac-a2usymo-shard-00-01.nxjqtrx.mongodb.net:27017,ac-a2usymo-shard-00-02.nxjqtrx.mongodb.net:27017/finanfriend?replicaSet=atlas-k4atr5-shard-0&ssl=true&authSource=admin&retryWrites=true&w=majority&appName=finwhin');
 
 app.get('/', async (req, res) => {
   const transactions = await Transaction.find().sort({ date: -1 });
