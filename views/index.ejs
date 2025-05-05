@@ -42,8 +42,8 @@
             <div class="alert"><%= message %></div>
           <% } %>
           <form action="/api/transactions" method="POST">
-            <input type="number" name="amount" placeholder="New Amount" required />
-            <input type="text" name="description" placeholder="New Description" />
+            <input type="number" name="amount" placeholder="Amount" required />
+            <input type="text" name="description" placeholder="Description" />
             <input type="date" name="date" required />
             <select name="expenseType" required>
               <option value="">Select Type</option>
